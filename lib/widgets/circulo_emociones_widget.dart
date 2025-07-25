@@ -45,6 +45,16 @@ class _CirculoEmocionesWidgetState extends State<CirculoEmocionesWidget>
 
   @override
   Widget build(BuildContext context) {
+    // Crear una lista de emociones con traducciones
+    final emocionesTraducidas = widget.emociones.map((emocion) {
+      return CirculoEmociones(
+        id: emocion.id,
+        descripcion: EmocionesService().getTranslatedEmotion(emocion.descripcion, context),
+        idNivel: emocion.idNivel,
+        children: emocion.children,
+      );
+    }).toList();
+
     return GestureDetector(
       onTapDown: (details) {
         final RenderBox renderBox = context.findRenderObject() as RenderBox;
@@ -54,13 +64,15 @@ class _CirculoEmocionesWidgetState extends State<CirculoEmocionesWidget>
         for (final seccion in _secciones) {
           if (seccion.path.contains(localPosition)) {
             if (widget.onEmocionSeleccionada != null) {
-              widget.onEmocionSeleccionada!(seccion.emocion);
+              // Buscar la emoción original usando el id
+              final emocionOriginal = widget.emociones.firstWhere((e) => e.id == seccion.emocion.id);
+              widget.onEmocionSeleccionada!(emocionOriginal);
             }
             break;
           }
         }
       },
-      child: Container(
+      child: SizedBox(
         width: 400,
         height: 400,
         child: AnimatedBuilder(
@@ -69,7 +81,7 @@ class _CirculoEmocionesWidgetState extends State<CirculoEmocionesWidget>
             return CustomPaint(
               size: const Size(400, 400),
               painter: CirculoPainter(
-                emociones: widget.emociones,
+                emociones: emocionesTraducidas,
                 animation: _animation.value,
                 onSeccionesCreated: (secciones) {
                   _secciones = secciones;
@@ -199,8 +211,8 @@ class CirculoPainter extends CustomPainter {
   double _calculateFontSize(String text, double anglePerSection) {
     // Calcular tamaño de fuente basado en el espacio disponible
     final baseSize = anglePerSection * 50; // Factor de escala
-    final maxSize = 16.0;
-    final minSize = 10.0;
+    const maxSize = 16.0;
+    const minSize = 10.0;
     
     double fontSize = math.min(baseSize, maxSize);
     if (text.length > 8) {

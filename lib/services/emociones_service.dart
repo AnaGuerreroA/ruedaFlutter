@@ -1,10 +1,169 @@
 import 'dart:math' as math;
+import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/circulo_emociones.dart';
 
 class EmocionesService {
   static final EmocionesService _instance = EmocionesService._internal();
   factory EmocionesService() => _instance;
   EmocionesService._internal();
+
+  // Función para convertir nombres de emociones a camelCase para localizaciones
+  String _emotionToCamelCase(String emotion) {
+    // Lista de casos especiales
+    final Map<String, String> specialCases = {
+      'Let Down': 'letDown',
+      'Out of control': 'outOfControl',
+    };
+    
+    if (specialCases.containsKey(emotion)) {
+      return specialCases[emotion]!;
+    }
+    
+    // Convertir primera letra a minúscula
+    return emotion[0].toLowerCase() + emotion.substring(1);
+  }
+
+  // Función para obtener la traducción de una emoción
+  String getTranslatedEmotion(String emotion, BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final camelCaseKey = _emotionToCamelCase(emotion);
+    
+    // Usar reflexión para obtener la traducción
+    try {
+      switch (camelCaseKey) {
+        case 'fearful': return localizations.fearful;
+        case 'angry': return localizations.angry;
+        case 'disgusted': return localizations.disgusted;
+        case 'sad': return localizations.sad;
+        case 'happy': return localizations.happy;
+        case 'surprised': return localizations.surprised;
+        case 'bad': return localizations.bad;
+        case 'scared': return localizations.scared;
+        case 'anxious': return localizations.anxious;
+        case 'insecure': return localizations.insecure;
+        case 'weak': return localizations.weak;
+        case 'rejected': return localizations.rejected;
+        case 'threatened': return localizations.threatened;
+        case 'letDown': return localizations.letDown;
+        case 'humiliated': return localizations.humiliated;
+        case 'bitter': return localizations.bitter;
+        case 'mad': return localizations.mad;
+        case 'aggressive': return localizations.aggressive;
+        case 'frustrated': return localizations.frustrated;
+        case 'distant': return localizations.distant;
+        case 'critical': return localizations.critical;
+        case 'disapproving': return localizations.disapproving;
+        case 'disappointed': return localizations.disappointed;
+        case 'awful': return localizations.awful;
+        case 'repelled': return localizations.repelled;
+        case 'hurt': return localizations.hurt;
+        case 'depressed': return localizations.depressed;
+        case 'guilty': return localizations.guilty;
+        case 'despair': return localizations.despair;
+        case 'vulnerable': return localizations.vulnerable;
+        case 'lonely': return localizations.lonely;
+        case 'optimistic': return localizations.optimistic;
+        case 'trusting': return localizations.trusting;
+        case 'peaceful': return localizations.peaceful;
+        case 'powerful': return localizations.powerful;
+        case 'accepted': return localizations.accepted;
+        case 'proud': return localizations.proud;
+        case 'interested': return localizations.interested;
+        case 'content': return localizations.content;
+        case 'playful': return localizations.playful;
+        case 'excited': return localizations.excited;
+        case 'amazed': return localizations.amazed;
+        case 'confused': return localizations.confused;
+        case 'startled': return localizations.startled;
+        case 'tired': return localizations.tired;
+        case 'stressed': return localizations.stressed;
+        case 'busy': return localizations.busy;
+        case 'bored': return localizations.bored;
+        case 'helpless': return localizations.helpless;
+        case 'frightened': return localizations.frightened;
+        case 'overwhelmed': return localizations.overwhelmed;
+        case 'worried': return localizations.worried;
+        case 'inadequate': return localizations.inadequate;
+        case 'inferior': return localizations.inferior;
+        case 'worthless': return localizations.worthless;
+        case 'insignificant': return localizations.insignificant;
+        case 'excluded': return localizations.excluded;
+        case 'persecuted': return localizations.persecuted;
+        case 'nervous': return localizations.nervous;
+        case 'exposed': return localizations.exposed;
+        case 'betrayed': return localizations.betrayed;
+        case 'resentful': return localizations.resentful;
+        case 'disrespected': return localizations.disrespected;
+        case 'ridiculed': return localizations.ridiculed;
+        case 'indignant': return localizations.indignant;
+        case 'violated': return localizations.violated;
+        case 'furious': return localizations.furious;
+        case 'jealous': return localizations.jealous;
+        case 'provoked': return localizations.provoked;
+        case 'hostile': return localizations.hostile;
+        case 'infuriated': return localizations.infuriated;
+        case 'annoyed': return localizations.annoyed;
+        case 'withdrawn': return localizations.withdrawn;
+        case 'numb': return localizations.numb;
+        case 'sceptical': return localizations.sceptical;
+        case 'dismissive': return localizations.dismissive;
+        case 'judgmental': return localizations.judgmental;
+        case 'embarrassed': return localizations.embarrassed;
+        case 'appalled': return localizations.appalled;
+        case 'revolted': return localizations.revolted;
+        case 'nauseated': return localizations.nauseated;
+        case 'detestable': return localizations.detestable;
+        case 'horrified': return localizations.horrified;
+        case 'hesitant': return localizations.hesitant;
+        case 'empty': return localizations.empty;
+        case 'remorseful': return localizations.remorseful;
+        case 'ashamed': return localizations.ashamed;
+        case 'powerless': return localizations.powerless;
+        case 'grief': return localizations.grief;
+        case 'fragile': return localizations.fragile;
+        case 'victimised': return localizations.victimised;
+        case 'abandoned': return localizations.abandoned;
+        case 'isolated': return localizations.isolated;
+        case 'inspired': return localizations.inspired;
+        case 'hopeful': return localizations.hopeful;
+        case 'intimate': return localizations.intimate;
+        case 'sensitive': return localizations.sensitive;
+        case 'thankful': return localizations.thankful;
+        case 'loving': return localizations.loving;
+        case 'creative': return localizations.creative;
+        case 'courageous': return localizations.courageous;
+        case 'valued': return localizations.valued;
+        case 'respected': return localizations.respected;
+        case 'confident': return localizations.confident;
+        case 'successful': return localizations.successful;
+        case 'inquisitive': return localizations.inquisitive;
+        case 'curious': return localizations.curious;
+        case 'joyful': return localizations.joyful;
+        case 'free': return localizations.free;
+        case 'cheeky': return localizations.cheeky;
+        case 'aroused': return localizations.aroused;
+        case 'energetic': return localizations.energetic;
+        case 'eager': return localizations.eager;
+        case 'awe': return localizations.awe;
+        case 'astonished': return localizations.astonished;
+        case 'perplex': return localizations.perplex;
+        case 'disillusioned': return localizations.disillusioned;
+        case 'dismayed': return localizations.dismayed;
+        case 'shocked': return localizations.shocked;
+        case 'unfocussed': return localizations.unfocussed;
+        case 'sleepy': return localizations.sleepy;
+        case 'outOfControl': return localizations.outOfControl;
+        case 'rushed': return localizations.rushed;
+        case 'pressured': return localizations.pressured;
+        case 'apathetic': return localizations.apathetic;
+        case 'indifferent': return localizations.indifferent;
+        default: return emotion; // Fallback al nombre original
+      }
+    } catch (e) {
+      return emotion; // Fallback al nombre original en caso de error
+    }
+  }
 
   // Datos base de emociones según la nueva estructura
   static final List<Map<String, dynamic>> _emocionesRaw = [

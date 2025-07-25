@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/circulo_emociones.dart';
 import '../services/emociones_service.dart';
 import '../widgets/circulo_emociones_widget.dart';
+import '../widgets/language_selector.dart';
 
 class CirculoEmocionesScreen extends StatefulWidget {
   const CirculoEmocionesScreen({super.key});
@@ -65,6 +67,8 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
   Future<void> _guardarEmocion() async {
     if (_emocionSeleccionada == null) return;
 
+    final localizations = AppLocalizations.of(context)!;
+
     setState(() {
       _isLoading = true;
     });
@@ -83,7 +87,7 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
         if (resultado['success'] == true) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(resultado['mensaje'] ?? 'Emoción guardada correctamente'),
+              content: Text(resultado['mensaje'] ?? localizations.emotionSavedSuccess),
               backgroundColor: Colors.green,
               duration: const Duration(seconds: 3),
             ),
@@ -98,7 +102,7 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(resultado['mensaje'] ?? 'Error al guardar la emoción'),
+              content: Text(resultado['mensaje'] ?? localizations.emotionSavedError),
               backgroundColor: Colors.red,
               duration: const Duration(seconds: 3),
             ),
@@ -108,10 +112,10 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Error de red: No se pudo conectar con el servidor'),
+          SnackBar(
+            content: Text(localizations.networkError),
             backgroundColor: Colors.red,
-            duration: Duration(seconds: 3),
+            duration: const Duration(seconds: 3),
           ),
         );
       }
@@ -125,8 +129,10 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
   }
 
   String _getTituloNivel() {
+    final localizations = AppLocalizations.of(context)!;
+    
     if (_navigationStack.isEmpty) {
-      return 'Emociones Principales';
+      return localizations.mainEmotions;
     } else if (_navigationStack.length == 1) {
       return _navigationStack.first.descripcion;
     } else {
@@ -135,28 +141,33 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
   }
 
   String _getTextoBotonRetroceso() {
+    final localizations = AppLocalizations.of(context)!;
+    
     if (_navigationStack.length == 1) {
-      return 'Volver a Emociones Principales';
+      return localizations.backToMain;
     } else if (_navigationStack.length == 2) {
-      return 'Volver a ${_navigationStack.first.descripcion}';
+      return localizations.backTo(_navigationStack.first.descripcion);
     } else {
-      return 'Volver al nivel anterior';
+      return localizations.backToPrevious;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Círculo de Emociones'),
+        title: Text(localizations.emotionCircle),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           if (_navigationStack.isNotEmpty)
             IconButton(
               onPressed: _goBack,
               icon: const Icon(Icons.arrow_back),
-              tooltip: 'Volver al nivel anterior',
+              tooltip: localizations.backToPrevious,
             ),
+          const LanguageSelector(),
         ],
       ),
       body: SingleChildScrollView(
@@ -185,7 +196,7 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  'Nivel ${_navigationStack.length + 1} de 3',
+                  localizations.level(_navigationStack.length + 1, 3),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w500,
@@ -233,14 +244,14 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Emoción seleccionada:',
+                      localizations.selectedEmotion,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      _emocionSeleccionada?.descripcion ?? 'Ninguna',
+                      _emocionSeleccionada?.descripcion ?? localizations.selectedEmotionNone,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: _emocionSeleccionada != null 
                             ? Theme.of(context).primaryColor 
@@ -253,7 +264,7 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
                       
                       // Slider de intensidad
                       Text(
-                        'Intensidad (1 a 10): ${_intensidad.round()}',
+                        localizations.intensity(_intensidad.round()),
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Slider(
@@ -275,10 +286,10 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
                       TextField(
                         controller: _comentariosController,
                         maxLines: 3,
-                        decoration: const InputDecoration(
-                          labelText: 'Comentarios',
-                          hintText: 'Escribe tus comentarios aquí...',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: localizations.comments,
+                          hintText: localizations.commentsHint,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                       
@@ -293,31 +304,31 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
                             padding: const EdgeInsets.symmetric(vertical: 16),
                           ),
                           child: _isLoading
-                              ? const Row(
+                              ? Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 20,
                                       height: 20,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                       ),
                                     ),
-                                    SizedBox(width: 12),
-                                    Text('Guardando...'),
+                                    const SizedBox(width: 12),
+                                    Text(localizations.saving),
                                   ],
                                 )
-                              : const Text(
-                                  'Guardar Emoción',
-                                  style: TextStyle(fontSize: 16),
+                              : Text(
+                                  localizations.saveEmotion,
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                         ),
                       ),
                     ] else if (_emocionSeleccionada != null && !_emocionSeleccionada!.esTercerNivel) ...[
                       const SizedBox(height: 10),
-                      const Text(
-                        'Selecciona una emoción más específica para continuar',
-                        style: TextStyle(
+                      Text(
+                        localizations.selectMoreSpecific,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           color: Colors.grey,
                         ),
