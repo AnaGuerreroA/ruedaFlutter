@@ -39,39 +39,49 @@ class CirculoEmociones {
 
 // Modelo para la selección de emoción
 class SeleccionEmocion {
-  final int? idSeleccionado;
-  final String nombre;
+  final int? id;                  // ID de la selección (auto-increment en BD)
+  final int idEmocion;           // ID de la emoción (referencia a tabla emociones)
+  final String nombreOriginal;   // Nombre original de la emoción para referencia
   final int intensidad;
   final String comentarios;
   final DateTime fechaSeleccion;
+  final String idioma;           // Idioma del usuario ('es', 'en')
 
   SeleccionEmocion({
-    this.idSeleccionado,
-    required this.nombre,
+    this.id,
+    required this.idEmocion,
+    required this.nombreOriginal,
     required this.intensidad,
     required this.comentarios,
     DateTime? fechaSeleccion,
+    required this.idioma,
   }) : fechaSeleccion = fechaSeleccion ?? DateTime.now();
 
   Map<String, dynamic> toJson() {
     return {
-      'idSeleccionado': idSeleccionado,
-      'nombre': nombre,
+      'id': id,
+      'idEmocion': idEmocion,           // Cambiado a camelCase
+      'nombreOriginal': nombreOriginal,  // Cambiado a camelCase
       'intensidad': intensidad,
       'comentarios': comentarios,
-      'fechaSeleccion': fechaSeleccion.toIso8601String(),
+      'fechaSeleccion': fechaSeleccion.toIso8601String(), // Cambiado a camelCase
+      'idioma': idioma,
     };
   }
 
   factory SeleccionEmocion.fromJson(Map<String, dynamic> json) {
     return SeleccionEmocion(
-      idSeleccionado: json['idSeleccionado'],
-      nombre: json['nombre'] ?? '',
+      id: json['id'],
+      idEmocion: json['idEmocion'] ?? json['id_emocion'] ?? 0, // Soporta ambos formatos
+      nombreOriginal: json['nombreOriginal'] ?? json['nombre_original'] ?? '',
       intensidad: json['intensidad'] ?? 5,
       comentarios: json['comentarios'] ?? '',
       fechaSeleccion: json['fechaSeleccion'] != null 
           ? DateTime.parse(json['fechaSeleccion'])
-          : DateTime.now(),
+          : (json['fecha_seleccion'] != null 
+              ? DateTime.parse(json['fecha_seleccion'])
+              : DateTime.now()),
+      idioma: json['idioma'] ?? 'es',
     );
   }
 }

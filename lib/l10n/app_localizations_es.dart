@@ -77,7 +77,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get changeLanguage => 'Cambiar idioma';
 
   @override
-  String get fearful => 'Temeroso';
+  String get fearful => 'Miedo';
 
   @override
   String get angry => 'Enojado';
@@ -453,4 +453,28 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get indifferent => 'Indiferente';
+
+  @override
+  String get reports => 'Reportes';
+
+  @override
+  String get statistics => 'Estadísticas';
+
+  @override
+  String get lastWeek => 'Última semana';
+
+  @override
+  String get lastMonth => 'Último mes';
+
+  @override
+  String get trends => 'Tendencias';
+
+  @override
+  String get distribution => 'Distribución';
+
+  @override
+  String get patterns => 'Patrones';
+
+  @override
+  String get compare => 'Comparar';
 }

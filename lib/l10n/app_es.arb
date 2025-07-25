@@ -43,7 +43,7 @@
   "emotionSavedError": "Error al guardar la emoción",
   "networkError": "Error de red: No se pudo conectar con el servidor",
   "changeLanguage": "Cambiar idioma",
-  "fearful": "Temeroso",
+  "fearful": "Miedo",
   "angry": "Enojado",
   "disgusted": "Disgustado",
   "sad": "Triste",
@@ -168,5 +168,13 @@
   "rushed": "Apurado",
   "pressured": "Presionado",
   "apathetic": "Apático",
-  "indifferent": "Indiferente"
+  "indifferent": "Indiferente",
+  "reports": "Reportes",
+  "statistics": "Estadísticas",
+  "lastWeek": "Última semana",
+  "lastMonth": "Último mes",
+  "trends": "Tendencias",
+  "distribution": "Distribución",
+  "patterns": "Patrones",
+  "compare": "Comparar"
 }

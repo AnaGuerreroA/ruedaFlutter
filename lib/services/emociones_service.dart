@@ -1,7 +1,7 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../l10n/app_localizations.dart';
 import '../models/circulo_emociones.dart';
+import 'hybrid_data_service.dart';
 
 class EmocionesService {
   static final EmocionesService _instance = EmocionesService._internal();
@@ -352,22 +352,14 @@ class EmocionesService {
 
   // Simular guardado de selección
   Future<Map<String, dynamic>> guardarSeleccion(SeleccionEmocion seleccion) async {
-    // Simular latencia de red
-    await Future.delayed(const Duration(milliseconds: 800));
-    
-    // Simular éxito (en una app real, aquí harías la llamada HTTP)
-    final random = math.Random();
-    final exito = random.nextDouble() > 0.1; // 90% de éxito
-    
-    if (exito) {
-      return {
-        'success': true,
-        'mensaje': 'Emoción "${seleccion.nombre}" registrada correctamente con intensidad ${seleccion.intensidad}/10'
-      };
-    } else {
+    try {
+      // Usar el servicio híbrido que maneja SQLite + API
+      final hybridService = HybridDataService();
+      return await hybridService.guardarSeleccionEmocion(seleccion);
+    } catch (e) {
       return {
         'success': false,
-        'mensaje': 'Error al guardar la emoción'
+        'mensaje': 'Error al guardar la emoción: $e'
       };
     }
   }

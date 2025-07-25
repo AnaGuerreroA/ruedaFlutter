@@ -74,10 +74,11 @@ class _CirculoEmocionesScreenState extends State<CirculoEmocionesScreen> {
     });
 
     final seleccion = SeleccionEmocion(
-      idSeleccionado: _emocionSeleccionada!.id,
-      nombre: _emocionSeleccionada!.descripcion,
+      idEmocion: _emocionSeleccionada!.id,
+      nombreOriginal: _emocionSeleccionada!.descripcion,
       intensidad: _intensidad.round(),
       comentarios: _comentariosController.text,
+      idioma: Localizations.localeOf(context).languageCode,
     );
 
     try {

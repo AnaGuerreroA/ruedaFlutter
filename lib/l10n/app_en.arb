@@ -168,5 +168,13 @@
   "rushed": "Rushed",
   "pressured": "Pressured",
   "apathetic": "Apathetic",
-  "indifferent": "Indifferent"
+  "indifferent": "Indifferent",
+  "reports": "Reports",
+  "statistics": "Statistics",
+  "lastWeek": "Last week",
+  "lastMonth": "Last month",
+  "trends": "Trends",
+  "distribution": "Distribution",
+  "patterns": "Patterns",
+  "compare": "Compare"
 }

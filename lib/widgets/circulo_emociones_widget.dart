@@ -21,7 +21,7 @@ class _CirculoEmocionesWidgetState extends State<CirculoEmocionesWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
-  List<_SeccionCirculo> _secciones = [];
+  List<SeccionCirculo> _secciones = [];
 
   @override
   void initState() {
@@ -98,8 +98,8 @@ class _CirculoEmocionesWidgetState extends State<CirculoEmocionesWidget>
 class CirculoPainter extends CustomPainter {
   final List<CirculoEmociones> emociones;
   final double animation;
-  final Function(List<_SeccionCirculo>)? onSeccionesCreated;
-  final List<_SeccionCirculo> _secciones = [];
+  final Function(List<SeccionCirculo>)? onSeccionesCreated;
+  final List<SeccionCirculo> _secciones = [];
 
   CirculoPainter({
     required this.emociones,
@@ -154,7 +154,7 @@ class CirculoPainter extends CustomPainter {
       canvas.drawPath(path, borderPaint);
       
       // Guardar información de la sección para detección de taps
-      _secciones.add(_SeccionCirculo(
+      _secciones.add(SeccionCirculo(
         path: path,
         emocion: emocion,
         startAngle: startAngle,
@@ -180,7 +180,7 @@ class CirculoPainter extends CustomPainter {
               Shadow(
                 offset: const Offset(1, 1),
                 blurRadius: 2,
-                color: Colors.black.withOpacity(0.7),
+                color: Colors.black.withValues(alpha: 0.7),
               ),
             ],
           ),
@@ -228,7 +228,7 @@ class CirculoPainter extends CustomPainter {
   }
 }
 
-class _SeccionCirculo {
+class SeccionCirculo {
   final Path path;
   final CirculoEmociones emocion;
   final double startAngle;
@@ -236,7 +236,7 @@ class _SeccionCirculo {
   final Offset center;
   final double radius;
 
-  _SeccionCirculo({
+  SeccionCirculo({
     required this.path,
     required this.emocion,
     required this.startAngle,

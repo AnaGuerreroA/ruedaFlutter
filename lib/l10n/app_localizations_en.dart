@@ -451,4 +451,28 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get indifferent => 'Indifferent';
+
+  @override
+  String get reports => 'Reports';
+
+  @override
+  String get statistics => 'Statistics';
+
+  @override
+  String get lastWeek => 'Last week';
+
+  @override
+  String get lastMonth => 'Last month';
+
+  @override
+  String get trends => 'Trends';
+
+  @override
+  String get distribution => 'Distribution';
+
+  @override
+  String get patterns => 'Patterns';
+
+  @override
+  String get compare => 'Compare';
 }
