@@ -1,0 +1,7 @@
+include: package:flutter_lints/flutter.yaml
+
+# Additional rules can be added here
+linter:
+  rules:
+    # Uncomment the following line to enable additional rules
+    # prefer_single_quotes: true
