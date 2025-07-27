@@ -1,0 +1,45 @@
+name: rueda_app
+description: Una aplicación Flutter para el proyecto rueda.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  cupertino_icons: ^1.0.2
+  # HTTP para APIs (opcional para futuro)
+  http: ^1.1.0
+  # Logging
+  logger: ^2.0.2
+  # Gráficos para reportes avanzados
+  fl_chart: ^0.68.0
+  # Fechas y utilidades
+  collection: ^1.17.2
+  # Persistencia de datos
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
